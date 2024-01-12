@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "this" {
-  bucket = "${var.name_prefix}-cronjob-output"
+  bucket        = "${var.name_prefix}-cronjob-output"
+  force_destroy = true
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {

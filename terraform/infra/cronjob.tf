@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "this" {
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
-      type = "Federated"
+      type        = "Federated"
       identifiers = [module.eks.oidc_provider_arn]
     }
 
@@ -42,8 +42,8 @@ data "aws_iam_policy_document" "this" {
 }
 
 resource "aws_iam_policy" "s3" {
-  name        = "${module.eks.cluster_name}-sa-${local.service_name}"
-  policy      = data.aws_iam_policy_document.s3.json
+  name   = "${module.eks.cluster_name}-sa-${local.service_name}"
+  policy = data.aws_iam_policy_document.s3.json
 }
 
 resource "aws_iam_role_policy_attachment" "s3" {
@@ -64,13 +64,13 @@ resource "kubernetes_service_account" "this" {
 resource "kubernetes_secret" "this" {
   metadata {
     generate_name = "${kubernetes_service_account.this.metadata.0.name}-token-"
-    namespace = kubernetes_namespace.ns.metadata[0].name
+    namespace     = kubernetes_namespace.ns.metadata[0].name
     annotations = {
       "kubernetes.io/service-account.name" = kubernetes_service_account.this.metadata.0.name
     }
   }
   type                           = "kubernetes.io/service-account-token"
-  wait_for_service_account_token = true    
+  wait_for_service_account_token = true
 }
 
 resource "kubernetes_cron_job_v1" "this" {

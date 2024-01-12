@@ -3,7 +3,7 @@ variable "aws_region" {
 }
 
 variable "state_bucket_name" {
-  type = string
+  type    = string
   default = null
 }
 
