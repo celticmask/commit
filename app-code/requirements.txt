@@ -1,0 +1,5 @@
+requests
+argparse
+boto3
+pypi-json
+argparse
